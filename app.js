@@ -3,7 +3,10 @@ const cors = require('cors')
 const sequelize = require('./util/database')
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin : "*",
+    credentials: true,
+}))
 
 // Import Routes
 const userRoutes = require('./routes/user')

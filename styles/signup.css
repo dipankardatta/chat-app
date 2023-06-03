@@ -1,4 +1,4 @@
-ody {
+body {
     background-color: #EDEDED;
     font-family: Arial, sans-serif;
 }
@@ -10,6 +10,9 @@ ody {
     background-color: #FFFFFF;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #expense-form label {
