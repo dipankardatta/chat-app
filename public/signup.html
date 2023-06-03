@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <form id="expense-form"action="/signup" method="POST">
+    <form id="expense-form" action="/signup" method="POST">
         <label for="name"><b>Name:</b></label>
         <input type="text" id="username" required>
 
@@ -27,4 +27,30 @@
     </form>
     <a href="../public/signin.html">Old User Sign In</a>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script></script>
+    <script>
+        const form = document.getElementById('expense-form')
+        form.addEventListener('submit', (event) => {
+            event.preventDefault()
+            const username = document.getElementById('username');
+            const email = document.getElementById('usermail');
+            const password = document.getElementById('password');
+            const phonenumber = document.getElementById('phonenumber');
+            const data = { name: username.value, email: email.value, password: password.value, phonenumber: phonenumber.value };
+
+            axios.post('http://localhost:3000/users/signup', data)
+                .then(response => {
+                    username.value = '';
+                    email.value = '';
+                    password.value = '';
+                    phonenumber.value = '';
+                    window.location.href = 'signin.html'
+                })
+                .catch(error => {
+                    if (error.response && error.response.data && error.response.data.error) {
+                        alert(error.response.data.error);
+                    } else {
+                        alert('An error occurred');
+                    }
+                })
+        })
+    </script>
