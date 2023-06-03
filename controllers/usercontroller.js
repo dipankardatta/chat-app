@@ -19,7 +19,7 @@ exports.signupUser = async (req, res) => {
     try {
       const saltRounds = 10
       bcrypt.hash(password, saltRounds, async (err, hash) => {
-        await User.create({ name, email, password,phonenumber: hash });
+        await User.create({ name, email, password: hash,phonenumber });
         res.status(201).json({ message: "SUCCESSFULLY CREATE NEW USER" })
       })
   
@@ -29,5 +29,27 @@ exports.signupUser = async (req, res) => {
       } else {
         res.status(500).json({ error: 'Internal server error' });
       }
+    }
+  };
+
+  exports.signInUser = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+      const user = await User.findOne({ where: { email } });
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (err) {
+          return res.status(500).json({ success: false, message: "Something went wrong" });
+        }
+        if (result) {
+          return res.status(200).json({ success: true, message: 'Logged in successfully', token: generateAccessToken(user.id, user.name, user.ispremiumuser) });
+        } else {
+          return res.status(401).json({ error: 'Incorrect password', message: 'The password you entered is incorrect.' });
+        }
+      });
+    } catch (err) {
+      res.status(500).json({ error: 'Internal server error' });
     }
   };
