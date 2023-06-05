@@ -33,7 +33,7 @@
 
         const form = document.querySelector('#signin-form');
         const API_URL = 'http://localhost:3000/users/signin'
-        
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.querySelector('#email').value;
@@ -45,7 +45,7 @@
 
                 if (response.data.success) {
                     localStorage.setItem('token', response.data.token);
-                    //
+                    window.location.href = '../public/chatapp.html'
                 }
 
             } catch (error) {
