@@ -44,7 +44,7 @@ exports.signupUser = async (req, res) => {
           return res.status(500).json({ success: false, message: "Something went wrong" });
         }
         if (result) {
-          return res.status(200).json({ success: true, message: 'Logged in successfully', token: generateAccessToken(user.id, user.name, user.ispremiumuser) });
+          return res.status(200).json({ success: true, message: 'Logged in successfully', token: generateAccessToken(user.id, user.name, user.phonenumber) });
         } else {
           return res.status(401).json({ error: 'Incorrect password', message: 'The password you entered is incorrect.' });
         }
